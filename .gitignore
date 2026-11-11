@@ -25,9 +25,11 @@ docker-compose-universal/*/mysql/
 docker-compose-universal/*/data/
 docker-compose-dev/
 
-# ==================== IDE / 系统 ====================
+# ==================== IDE / AI 助手（换电脑就没，不入库） ====================
 .idea/
 .vscode/
+.codebuddy/
+.trae/
 .DS_Store
 Thumbs.db
 *.swp
