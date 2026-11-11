@@ -1,0 +1,1 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["subpackage-diyComponents-pages-placeholder"],{b0d3:function(e,n,a){"use strict";var l;a.r(n);var c,t=function(){var e=this,n=e.$createElement,a=e._self._c||n;return a("v-uni-view")},o=[],r={name:"Placeholder"},s=r,u=a("f0c5"),p=Object(u["a"])(s,t,o,!1,null,null,null,!1,l,c);n["default"]=p.exports}}]);

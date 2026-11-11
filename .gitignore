@@ -1,0 +1,62 @@
+# ==================== 依赖 / 构建产物 ====================
+crmeb/vendor/
+template/admin/node_modules/
+template/admin/dist/
+template/uni-app/node_modules/
+template/uni-app/unpackage/
+template/uni-app/.hbuilderx/
+crmeb/runtime/*
+crmeb/backup/*
+crmeb/public/install.lock
+crmeb/public/uploads/*
+crmeb/public/uploads
+
+# ==================== 敏感配置 ====================
+crmeb/.env
+crmeb/.constant
+*.pem
+*.key
+
+# ==================== Docker 临时数据（如果以后用 docker 部署） ====================
+docker-compose/mysql/data/
+docker-compose/mysql/log/
+docker-compose/nginx/log/
+docker-compose-universal/*/mysql/
+docker-compose-universal/*/data/
+docker-compose-dev/
+
+# ==================== IDE / 系统 ====================
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+*.swp
+*.iml
+
+# ==================== 日志 ====================
+*.log
+crmeb/supervisord.log
+crmeb/supervisord.pid
+
+# ==================== 脚本 / 服务配置（这些每个服务器不一样，不入库） ====================
+crmeb/start.sh
+crmeb/supervisord.conf
+crmeb/my.cnf
+crmeb/redis.conf
+crmeb/vhost.conf
+crmeb/php-ini-overrides.ini
+crmeb/php-fpm.conf
+
+# ==================== 备份 ====================
+*_backup/
+
+# ==================== 系统生成的占位文件 ====================
+crmeb/Dockerfile
+crmeb/nginx.conf
+crmeb/.dockerignore
+crmeb/backup/readme.md
+crmeb/runtime/readme.md
+crmeb/runtime/cache/readme.md
+crmeb/runtime/log/readme.md
+crmeb/runtime/session/readme.md
+crmeb/runtime/temp/readme.md
