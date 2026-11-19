@@ -34,7 +34,7 @@ class SystemFileMd5Services extends BaseServices
     public function clearMd5List()
     {
         $prefix = Config::get('database.connections.' . Config::get('database.default') . '.prefix');
-        Db::execute('TRUNCATE TABLE "' . $prefix . 'system_file_md5"');
+        Db::execute('TRUNCATE TABLE `' . $prefix . 'system_file_md5`');
     }
 
     public function checkFile()

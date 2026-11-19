@@ -102,8 +102,7 @@ class UserWechatUserDao extends BaseDao
      */
     public function getListByModel(array $where, string $field = '', string $order = '', int $page, int $limit): array
     {
-        // PostgreSQL 严格模式：SELECT 中的 w.* 列必须依赖分组键，故带上关联表主键 w.id
-        return $this->searchWhere($where)->field($field)->page($page, $limit)->group($this->alias . '.uid,' . $this->join_alis . '.id')->order(($order ? $order . ' ,' : '') . $this->alias . '.uid desc')->select()->toArray();
+        return $this->searchWhere($where)->field($field)->page($page, $limit)->group($this->alias . '.uid')->order(($order ? $order . ' ,' : '') . $this->alias . '.uid desc')->select()->toArray();
     }
 
     /**

@@ -184,7 +184,7 @@ class StoreProductDao extends BaseDao
         })->when(isset($where['store_label_id']), function ($query) use ($where) {
             $query->where(function ($query) use ($where) {
                 foreach ($where['store_label_id'] as $value) {
-                    $query->whereOrRaw('FIND_IN_SET(?::text, label_list)', [$value]);
+                    $query->whereOr('FIND_IN_SET(:value, label_list)', ['value' => $value]);
                 }
             });
         })->order('sort desc')->field($field)->select()->toArray();

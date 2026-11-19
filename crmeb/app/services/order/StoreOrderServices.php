@@ -2063,7 +2063,7 @@ HTML;
         }
         [$page, $limit] = $this->getPageValue();
         $where = ['uid' => $uid, 'paid' => 1, 'refund_status' => 0, 'pid' => 0];
-        $list = $this->dao->getStairOrderList($where, 'order_id,real_name,total_num,total_price,pay_price,FROM_UNIXTIME(pay_time,\'%Y-%m-%d\') as pay_time,paid,pay_type,pink_id,seckill_id,bargain_id', $page, $limit);
+        $list = $this->dao->getStairOrderList($where, 'order_id,real_name,total_num,total_price,pay_price,FROM_UNIXTIME(pay_time,"%Y-%m-%d") as pay_time,paid,pay_type,pink_id,seckill_id,bargain_id', $page, $limit);
         $count = $this->dao->count($where);
         return compact('list', 'count');
     }

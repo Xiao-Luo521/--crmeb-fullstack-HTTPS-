@@ -91,8 +91,6 @@ class UserBillDao extends BaseDao
      */
     public function getUserRefundPriceList(array $time, string $timeType, string $str, string $field = 'add_time')
     {
-        // MySQL 日期格式串转换为 PostgreSQL 的 TO_CHAR 格式
-        $timeType = str_replace(['%Y', '%m', '%d', '%H', '%i', '%s'], ['YYYY', 'MM', 'DD', 'HH24', 'MI', 'SS'], $timeType);
         return $this->getModel()->where('type', 'pay_product_refund')->where(function ($query) use ($time, $field) {
             if ($time[0] == $time[1]) {
                 $query->whereDay($field, $time[0]);
@@ -100,7 +98,7 @@ class UserBillDao extends BaseDao
                 $time[1] = date('Y/m/d', strtotime($time[1]) + 86400);
                 $query->whereTime($field, 'between', $time);
             }
-        })->field("TO_CHAR(TO_TIMESTAMP($field), '$timeType') as days,$str as num,STRING_AGG(link_id::text, ',') as link_ids")->group('days')->select()->toArray();
+        })->field("FROM_UNIXTIME($field,'$timeType') as days,$str as num,GROUP_CONCAT(link_id) as link_ids")->group('days')->select()->toArray();
     }
 
     /**
@@ -276,10 +274,8 @@ class UserBillDao extends BaseDao
                 }
                 $query->field("sum($field) as number,FROM_UNIXTIME($group, '$timeUinx') as time");
                 $query->group("FROM_UNIXTIME($group, '$timeUinx')");
-                // PostgreSQL 严格模式: ORDER BY 需使用分组表达式
-                $query->orderRaw("FROM_UNIXTIME($group, '$timeUinx') ASC");
             })
-            ->select()->toArray();
+            ->order('add_time ASC')->select()->toArray();
     }
 
     /**

@@ -275,6 +275,10 @@ export default {
       type: Number,
       default: 0,
     },
+    cateType: {
+      type: Number,
+      default: 0,
+    },
   },
   data() {
     return {
@@ -542,7 +546,7 @@ export default {
         id: '',
         pid: 0,
       };
-      getCategoryListApi(this.uploadName)
+      getCategoryListApi({ ...this.uploadName, type: this.cateType })
         .then(async (res) => {
           if (type !== 'search') {
             this.treeData2 = JSON.parse(JSON.stringify([...res.data.list]));
@@ -661,7 +665,7 @@ export default {
     },
     // 新建分类表单
     getFrom() {
-      this.$modalForm(createApi({ id: this.treeId })).then((res) => {
+      this.$modalForm(createApi({ id: this.treeId, type: this.cateType })).then((res) => {
         this.getList();
       });
     },

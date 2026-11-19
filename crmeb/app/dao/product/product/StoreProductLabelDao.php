@@ -61,9 +61,6 @@ class StoreProductLabelDao extends BaseDao
 
     public function labelListByIds($ids)
     {
-        if (empty($ids)) {
-            return [];
-        }
         return $this->getModel()->whereIn('id', $ids)->where('status', 1)->where('is_show', 1)->select()->toArray();
     }
 }

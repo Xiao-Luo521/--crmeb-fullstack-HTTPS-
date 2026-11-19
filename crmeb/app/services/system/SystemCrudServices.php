@@ -301,9 +301,9 @@ class SystemCrudServices extends BaseServices
      */
     public function getTableInfo(string $tableName)
     {
-        $sql = 'SELECT * FROM information_schema.TABLES WHERE table_schema = current_schema() AND TABLE_NAME = ?';
+        $sql = 'SELECT * FROM `information_schema`.`TABLES` WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ?';
 
-        $tableInfo = Db::query($sql, [$this->getTableName($tableName)]);
+        $tableInfo = Db::query($sql, [config('database.connections.mysql.database'), $this->getTableName($tableName)]);
 
         return $tableInfo[0] ?? [];
     }
@@ -318,9 +318,9 @@ class SystemCrudServices extends BaseServices
      */
     public function getColumnNamesList(string $tableName)
     {
-        $sql = 'SELECT * FROM information_schema.columns WHERE table_schema = current_schema() AND table_name = ? ORDER BY ORDINAL_POSITION';
+        $sql = 'SELECT * FROM `information_schema`.`columns` WHERE TABLE_SCHEMA = ? AND table_name = ? ORDER BY ORDINAL_POSITION';
 
-        $column = Db::query($sql, [$this->getTableName($tableName)]);
+        $column = Db::query($sql, [config('database.connections.mysql.database'), $this->getTableName($tableName)]);
 
         $columns = [];
         foreach ($column as $item) {
@@ -351,9 +351,9 @@ class SystemCrudServices extends BaseServices
      */
     public function getTableAll()
     {
-        $sql = "SELECT c.relname AS TABLE_NAME, COALESCE(d.description, '') AS TABLE_COMMENT FROM pg_class c JOIN pg_namespace n ON n.oid = c.relnamespace LEFT JOIN pg_description d ON d.objoid = c.oid AND d.objsubid = 0 WHERE n.nspname = current_schema() AND c.relkind = 'r'";
+        $sql = "SELECT TABLE_NAME, TABLE_COMMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = ?";
 
-        $tableAll = Db::query($sql);
+        $tableAll = Db::query($sql, [config('database.connections.mysql.database')]);
 
         $data = [];
         foreach ($tableAll as $item) {

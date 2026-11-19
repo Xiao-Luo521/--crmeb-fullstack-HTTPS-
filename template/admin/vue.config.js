@@ -77,24 +77,6 @@ module.exports = {
   // 这里写你调用接口的基础路径，来解决跨域，如果设置了代理，那你本地开发环境的axios的baseUrl要写为 '' ，即空字符串
   devServer: {
     port: 1617, // 端口
-    // 开发代理：把 /adminapi 开头的请求转发到本地 FastAPI（http://127.0.0.1:8100）
-    // 作用：让前端与接口保持「同源」，彻底避开跨域与 Cookie 问题。
-    // 注意：配合此代理时，.env.dev 里的 VUE_APP_API_URL 必须保持为空字符串。
-    proxy: {
-      '/adminapi': {
-        target: 'http://127.0.0.1:8100',
-        changeOrigin: true,
-      },
-      // 静态资源（系统图片 / 用户上传文件）：转发给 FastAPI 托管的 public 目录
-      '/statics': {
-        target: 'http://127.0.0.1:8100',
-        changeOrigin: true,
-      },
-      '/uploads': {
-        target: 'http://127.0.0.1:8100',
-        changeOrigin: true,
-      },
-    },
   },
   publicPath: '/admin',
   assetsDir: 'system_static',

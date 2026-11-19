@@ -11,7 +11,7 @@
 use think\facade\Env;
 
 return [
-    'default'     => Env::get('queue.driver', 'redis'),
+    'default'     => 'redis',
     'prefix'      => 'crmeb_',
     'connections' => [
         'sync'     => [

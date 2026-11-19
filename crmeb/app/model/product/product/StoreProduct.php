@@ -152,17 +152,16 @@ class StoreProduct extends BaseModel
     public function searchStoreNameAttr($query, $value, $data)
     {
         if ($value != '') {
-            // PostgreSQL: id 为整数列, 需转文本后再 LIKE
-            $raw = '(keyword LIKE ? OR store_name LIKE ? OR store_info LIKE ? OR id::text LIKE ? OR bar_code LIKE ?)';
+            $field = 'keyword|store_name|store_info|id|bar_code';
             if (is_string($value)) {
-                $like = htmlspecialchars("%" . trim($value) . "%");
-                $query->whereRaw($raw, [$like, $like, $like, $like, $like]);
+                $query->whereLike($field, htmlspecialchars("%" . trim($value) . "%"));
             } elseif (is_array($value) && count($value) > 0) {
-                $query->where(function ($q) use ($value, $raw) {
+                $query->where(function ($q) use ($value, $field) {
+                    $data = [];
                     foreach ($value as $k) {
-                        $like = "%" . trim($k) . "%";
-                        $q->whereOrRaw($raw, [$like, $like, $like, $like, $like]);
+                        $data[] = [$field, 'like', "%" . trim($k) . "%"];
                     }
+                    $q->whereOr($data);
                 });
             }
         }
@@ -516,7 +515,7 @@ class StoreProduct extends BaseModel
         if (count($value)) {
             $query->where(function ($query) use ($value) {
                 foreach ($value as $item) {
-                    $query->whereOrRaw('FIND_IN_SET(?::text, label_list)', [$item]);
+                    $query->whereOr('FIND_IN_SET(:value, label_list)', ['value' => $item]);
                 }
             });
         }

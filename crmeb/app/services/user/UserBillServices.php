@@ -1121,7 +1121,7 @@ class UserBillServices extends BaseServices
                 $userExtract = $userExtractService->getColumn(['uid' => $uid], 'fail_msg', 'id');
                 break;
         }
-        $field = 'FROM_UNIXTIME(add_time,\'%Y-%m\') as time,string_agg(id::text, \',\') as ids';
+        $field = 'FROM_UNIXTIME(add_time,"%Y-%m") as time,group_concat(id SEPARATOR ",") ids';
         [$page, $limit] = $this->getPageValue();
         $list = $this->dao->getUserBillListByGroup($where, $field, 'time', $page, $limit);
         $data = [];
@@ -1131,7 +1131,7 @@ class UserBillServices extends BaseServices
             foreach ($listIds as $id) {
                 $ids = array_merge($ids, explode(',', $id));
             }
-            $info = $this->dao->getColumn([['id', 'in', $ids]], 'FROM_UNIXTIME(add_time,\'%Y-%m-%d %H:%i\') as add_time,title,number,pm,link_id', 'id');
+            $info = $this->dao->getColumn([['id', 'in', $ids]], 'FROM_UNIXTIME(add_time,"%Y-%m-%d %H:%i") as add_time,title,number,pm,link_id', 'id');
             foreach ($list as $item) {
                 $value['time'] = $item['time'];
                 $id = explode(',', $item['ids']);

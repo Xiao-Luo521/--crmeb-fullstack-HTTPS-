@@ -1,4 +1,4 @@
-﻿.index-wrapper .title {
+.index-wrapper .title {
   padding-top: 20rpx;
   margin: 0 20rpx;
 }
@@ -210,7 +210,7 @@
   position: relative;
   margin-top: 20rpx;
   width: 100%;
-  /* padding-bottom: 100rpx; */
+  // padding-bottom: 100rpx;
   overflow: hidden;
 }
 
@@ -482,7 +482,7 @@
 }
 
 .noCommodity {
-  /* border-top: 7rpx solid #f5f5f5 */
+  // border-top: 7rpx solid #f5f5f5
 }
 
 .noCommodity .pictrue {
@@ -682,7 +682,7 @@
 }
 
 .sign-record .list .item .listn .itemn {
-  /* height: 120rpx; */
+  // height: 120rpx;
   border-bottom: 1rpx solid #eee;
   padding: 30rpx;
 }
@@ -691,7 +691,7 @@
 }
 
 .sign-record .list .item .listn .itemn .name {
-  /* width: 390rpx; */
+  // width: 390rpx;
   font-size: 28rpx;
   color: #282828;
   margin-bottom: 10rpx;
@@ -820,8 +820,8 @@
 }
 
 .pictrue_log_class {
-  /* background: -webkit-gradient(linear,left top,right top,from(rgba(246,122,56,1)),to(rgba(241,27,9,1))); */
-  /* background: linear-gradient(90deg,rgba(246,122,56,1) 0,rgba(241,27,9,1) 100%); */
+  // background: -webkit-gradient(linear,left top,right top,from(rgba(246,122,56,1)),to(rgba(241,27,9,1)));
+  // background: linear-gradient(90deg,rgba(246,122,56,1) 0,rgba(241,27,9,1) 100%);
   background-color: var(--view-theme);
   opacity: 1;
   position: absolute;
@@ -957,4 +957,3 @@ uni-toast .uni-toast {
 .poster-pop .poster-img {
   border-radius: 6px;
 }
-

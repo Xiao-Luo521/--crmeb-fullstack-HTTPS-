@@ -571,6 +571,19 @@ Route::group(function () {
     ->middleware(\app\api\middleware\StationOpenMiddleware::class)
     ->middleware(\app\api\middleware\AuthTokenMiddleware::class, false);
 
+//微页面AI聊天（登录会员自动保存聊天记录）
+Route::group(function () {
+    Route::get('ai/agent', 'v1.ai.ChatController/info')->option(['real_name' => 'AI聊天Agent信息']);
+    Route::get('ai/agents', 'v1.ai.ChatController/agents')->option(['real_name' => 'AI聊天Agent列表']);
+    Route::get('ai/history', 'v1.ai.ChatController/history')->option(['real_name' => 'AI聊天记录']);
+    Route::get('ai/sessions', 'v1.ai.ChatController/sessions')->option(['real_name' => 'AI聊天会话列表']);
+    Route::get('ai/messages', 'v1.ai.ChatController/messages')->option(['real_name' => 'AI聊天会话消息']);
+    Route::post('ai/chat', 'v1.ai.ChatController/send')->option(['real_name' => 'AI聊天发送消息']);
+})->middleware(\app\http\middleware\AllowOriginMiddleware::class)
+    ->middleware(\app\api\middleware\StationOpenMiddleware::class)
+    ->middleware(\app\api\middleware\AuthTokenMiddleware::class, false)
+    ->option(['mark' => 'ai_chat', 'mark_name' => 'AI聊天']);
+
 Route::miss(function () {
     if (app()->request->isOptions()) {
         $header = Config::get('cookie.header');

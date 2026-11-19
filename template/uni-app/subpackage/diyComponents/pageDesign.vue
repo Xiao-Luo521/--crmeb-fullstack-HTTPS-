@@ -157,6 +157,10 @@
               v-else-if="item.name == 'pointsMall'"
               :dataConfig="item"
             ></pointsMall>
+            <aiChat
+              v-else-if="item.name == 'aiChat'"
+              :dataConfig="item"
+            ></aiChat>
             <!-- #ifndef APP -->
             <richText
               v-else-if="item.name == 'richText'"
@@ -285,6 +289,7 @@ import swipers from "./swipers.vue";
 import titles from "./titles.vue";
 import presale from "./presale.vue";
 import pointsMall from "./pointsMall.vue";
+import aiChat from "./aiChat.vue";
 import richText from "./richText.vue";
 import videos from "./videos.vue";
 import signIn from "./signIn.vue";
@@ -326,6 +331,7 @@ export default {
     titles,
     presale,
     pointsMall,
+    aiChat,
     richText,
     videos,
     signIn,

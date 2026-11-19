@@ -596,7 +596,7 @@ class SystemCrud extends AuthController
             $routeServices->deleteRoutes($info->route_ids);
         }
 
-        Db::query("DROP TABLE \"" . Env::get('database.prefix', 'eb_') . $info->table_name . "\"");
+        Db::query("DROP TABLE `" . Env::get('database.prefix', 'eb_') . $info->table_name . "`");
 
         if ($info->make_path) {
             $errorFile = [];

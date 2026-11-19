@@ -89,10 +89,8 @@ class UserRechargeDao extends BaseDao
                 }
                 $query->field("sum($field) as number,FROM_UNIXTIME($group, '$timeUinx') as time");
                 $query->group("FROM_UNIXTIME($group, '$timeUinx')");
-                // PostgreSQL 严格模式: ORDER BY 需使用分组表达式
-                $query->orderRaw("FROM_UNIXTIME($group, '$timeUinx') ASC");
             })
-            ->select()->toArray();
+            ->order('add_time ASC')->select()->toArray();
 
     }
 

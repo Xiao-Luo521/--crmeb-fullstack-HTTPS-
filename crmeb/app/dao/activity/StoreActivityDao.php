@@ -34,7 +34,7 @@ class StoreActivityDao extends BaseDao
             })->when(isset($where['time_ids']) && count($where['time_ids']) > 0, function ($query) use ($where) {
                 $query->where(function ($query) use ($where) {
                     foreach ($where['time_ids'] as $value) {
-                        $query->whereOrRaw('FIND_IN_SET(?::text, time_ids) > 0', [$value]);
+                        $query->whereOr('FIND_IN_SET(:value, time_ids)', ['value' => $value]);
                     }
                 });
             })->when(isset($where['time']) && $where['time'] !== '', function ($query) use ($where) {

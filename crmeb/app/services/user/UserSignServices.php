@@ -296,11 +296,11 @@ class UserSignServices extends BaseServices
     public function getSignMonthList($uid)
     {
         [$page, $limit] = $this->getPageValue();
-        $data = $this->dao->getListGroup(['uid' => $uid], 'FROM_UNIXTIME(add_time,\'%Y-%m\') as time,string_agg(id::text, \',\') as ids', $page, $limit, 'time');
+        $data = $this->dao->getListGroup(['uid' => $uid], 'FROM_UNIXTIME(add_time,"%Y-%m") as time,group_concat(id SEPARATOR ",") ids', $page, $limit, 'time');
         $list = [];
         if ($data) {
             $ids = array_unique(array_column($data, 'ids'));
-            $dataIdsList = $this->dao->getList(['id' => $ids], 'FROM_UNIXTIME(add_time,\'%Y-%m-%d\') as add_time,title,number,id,uid', 0, 0);
+            $dataIdsList = $this->dao->getList(['id' => $ids], 'FROM_UNIXTIME(add_time,"%Y-%m-%d") as add_time,title,number,id,uid', 0, 0);
             foreach ($data as $item) {
                 $value['month'] = $item['time'];
                 $value['list'] = array_merge(array_filter($dataIdsList, function ($val) use ($item) {

@@ -105,7 +105,7 @@ class PublicController
         $gd_info = function_exists('gd_info') ? gd_info() : array();
         $info['environment'] = [
             ['name' => 'PHP版本', 'require' => '7.1-7.4', 'value' => phpversion()],
-            ['name' => '数据库版本', 'require' => 'PostgreSQL 10+', 'value' => Db::query("SELECT VERSION() as v")[0]['v'] ?? ''],
+            ['name' => 'MySql版本', 'require' => '5.6-8.0', 'value' => Db::query("SELECT VERSION()")[0]['VERSION()']],
             ['name' => 'MySqli', 'require' => '开启', 'value' => function_exists('mysqli_connect')],
             ['name' => 'Openssl', 'require' => '开启', 'value' => function_exists('openssl_encrypt')],
             ['name' => 'Session', 'require' => '开启', 'value' => function_exists('session_start')],

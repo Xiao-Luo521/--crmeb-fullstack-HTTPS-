@@ -139,13 +139,6 @@ class LoginController
             ['captchaVerification', ''],
         ], true);
 
-        // 本地调试：开启 sms_debug 后不走短信平台（也不校验滑块），固定验证码
-        if (env('sms_debug', false)) {
-            $debugCode = '123456';
-            CacheService::set('code_' . $phone, $debugCode, 600);
-            return app('json')->success('验证码发送成功（调试模式，验证码固定为 ' . $debugCode . '）');
-        }
-
         $keyName = 'sms.key.' . $key;
         if (!CacheService::has($keyName)) return app('json')->fail('发送验证码失败,请刷新页面重新获取');
 
@@ -292,19 +285,12 @@ class LoginController
         }
 
         //验证验证码
-        if (env('sms_debug', false)) {
-            // 本地调试：固定验证码，免短信
-            if ($captcha != '123456') {
-                return app('json')->fail('调试模式验证码为 123456');
-            }
-        } else {
-            $verifyCode = CacheService::get('code_' . $phone);
-            if (!$verifyCode)
-                return app('json')->fail('请先获取验证码');
-            $verifyCode = substr($verifyCode, 0, 6);
-            if ($verifyCode != $captcha) {
-                return app('json')->fail('验证码错误');
-            }
+        $verifyCode = CacheService::get('code_' . $phone);
+        if (!$verifyCode)
+            return app('json')->fail('请先获取验证码');
+        $verifyCode = substr($verifyCode, 0, 6);
+        if ($verifyCode != $captcha) {
+            return app('json')->fail('验证码错误');
         }
         $user_type = $request->getFromType() ? $request->getFromType() : 'h5';
         $token = $this->services->mobile($phone, $spread, $user_type, $agent_id);

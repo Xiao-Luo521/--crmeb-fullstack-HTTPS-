@@ -353,9 +353,8 @@ class StoreOrderDao extends BaseDao
                 }
                 $query->field("FROM_UNIXTIME(add_time,'$timeUnix') as day,count(*) as count,sum(pay_price) as price");
                 $query->group("FROM_UNIXTIME(add_time, '$timeUnix')");
-                // PostgreSQL 严格模式: ORDER BY 必须使用分组表达式或别名
-                $query->orderRaw("FROM_UNIXTIME(add_time, '$timeUnix') asc");
             })
+            ->order('add_time asc')
             ->select()->toArray();
     }
 
@@ -399,9 +398,8 @@ class StoreOrderDao extends BaseDao
                 }
                 $query->field("FROM_UNIXTIME(add_time,'$timeUnix') as day,count(*) as count,sum(pay_price) as price");
                 $query->group("FROM_UNIXTIME(add_time, '$timeUnix')");
-                // PostgreSQL 严格模式: ORDER BY 必须使用分组表达式或别名
-                $query->orderRaw("FROM_UNIXTIME(add_time, '$timeUnix') asc");
             })
+            ->order('add_time asc')
             ->select()->toArray();
     }
 
@@ -507,7 +505,7 @@ class StoreOrderDao extends BaseDao
     {
         return $this->search($where)
             ->field($field)->group("FROM_UNIXTIME(add_time, '%Y-%m-%d')")
-            ->orderRaw("FROM_UNIXTIME(add_time, '%Y-%m-%d') DESC")->page($page, $limit)->select()->toArray();
+            ->order('add_time DESC')->page($page, $limit)->select()->toArray();
     }
 
     /**
@@ -523,7 +521,7 @@ class StoreOrderDao extends BaseDao
             ->where('add_time', '<', $stop)
             ->field('sum(pay_price) as num,FROM_UNIXTIME(add_time, \'%Y-%m-%d\') as time')
             ->group("FROM_UNIXTIME(add_time, '%Y-%m-%d')")
-            ->orderRaw("FROM_UNIXTIME(add_time, '%Y-%m-%d') ASC")->select()->toArray();
+            ->order('add_time ASC')->select()->toArray();
     }
 
     /**
@@ -539,7 +537,7 @@ class StoreOrderDao extends BaseDao
             ->where('add_time', '<', $stop)
             ->field('count(id) as num,FROM_UNIXTIME(add_time, \'%Y-%m-%d\') as time')
             ->group("FROM_UNIXTIME(add_time, '%Y-%m-%d')")
-            ->orderRaw("FROM_UNIXTIME(add_time, '%Y-%m-%d') ASC")->select()->toArray();
+            ->order('add_time ASC')->select()->toArray();
     }
 
     /**
@@ -715,10 +713,8 @@ class StoreOrderDao extends BaseDao
                 }
                 $query->field("sum($sumField) as number,FROM_UNIXTIME($group, '$timeUinx') as time");
                 $query->group("FROM_UNIXTIME($group, '$timeUinx')");
-                // PostgreSQL 严格模式: ORDER BY 需使用分组表达式
-                $query->orderRaw("FROM_UNIXTIME($group, '$timeUinx') ASC");
             })
-            ->select()->toArray();
+            ->order('pay_time ASC,id DESC')->select()->toArray();
     }
 
     /**时间分组订单数统计
@@ -745,10 +741,8 @@ class StoreOrderDao extends BaseDao
                 }
                 $query->field("count($sumField) as number,FROM_UNIXTIME(pay_time, '$timeUinx') as time");
                 $query->group("FROM_UNIXTIME(pay_time, '$timeUinx')");
-                // PostgreSQL 严格模式: ORDER BY 需使用分组表达式
-                $query->orderRaw("FROM_UNIXTIME(pay_time, '$timeUinx') ASC");
             })
-            ->select()->toArray();
+            ->order('pay_time ASC,id DESC')->select()->toArray();
     }
 
     /**时间段支付订单人数
@@ -790,10 +784,8 @@ class StoreOrderDao extends BaseDao
                 }
                 $query->field("count(distinct uid) as number,FROM_UNIXTIME(pay_time, '$timeUinx') as time");
                 $query->group("FROM_UNIXTIME(pay_time, '$timeUinx')");
-                // PostgreSQL 严格模式: ORDER BY 需使用分组表达式
-                $query->orderRaw("FROM_UNIXTIME(pay_time, '$timeUinx') ASC");
             })
-            ->select()->toArray();
+            ->order('pay_time ASC,id DESC')->select()->toArray();
     }
 
 
